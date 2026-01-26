@@ -6,16 +6,27 @@ def calculate_loan(
     principal: float, rate: float, term_months: int
 ) -> Dict[str, object]:
     """
-    Calculate loan amortization schedule
+    Calculate loan amortization schedule.
 
     Args:
         principal: Loan amount (SEK)
-        rate: Annual interest rate (as decimal, e.g., 0.05 for 5%)
-        term_months: Loan term in months
+        rate: Annual interest rate as decimal, e.g., 0.05 for 5%.
+        term_months: Loan term in months.
+
+    Raises:
+        ValueError: If principal <= 0, rate < 0, or term_months <= 0.
 
     Returns:
-        Dictionary with total payment, monthly payment, and amortization schedule
+        Dictionary with total payment, monthly payment, and amortization schedule.
     """
+    # Guard against invalid inputs
+    if principal <= 0:
+        raise ValueError("Belopp måste vara större än 0")
+    if rate < 0:
+        raise ValueError("Ränta får inte vara negativ")
+    if term_months <= 0:
+        raise ValueError("Löptid måste vara större än 0")
+
     # Calculate monthly interest rate
     monthly_rate = rate / 12
 
@@ -86,17 +97,30 @@ def calculate_lease(
     lease_amount: float, rate: float, term_months: int, residual_value: float
 ) -> Dict[str, object]:
     """
-    Calculate lease payment schedule
+    Calculate lease payment schedule.
 
     Args:
-        lease_amount: Initial lease amount (SEK)
-        rate: Annual interest rate (as decimal, e.g., 0.05 for 5%)
-        term_months: Lease term in months
-        residual_value: Expected value at end of lease (SEK)
+        lease_amount: Initial lease amount (SEK).
+        rate: Annual interest rate as decimal, e.g., 0.05 for 5%.
+        term_months: Lease term in months.
+        residual_value: Expected value at end of lease (SEK).
+
+    Raises:
+        ValueError: If inputs are invalid – e.g., negative values, residual >= amount.
 
     Returns:
-        Dictionary with total payment, monthly payment, and amortization schedule
+        Dictionary with total payment, monthly payment, and amortization schedule.
     """
+    # Guard against invalid inputs
+    if lease_amount <= 0:
+        raise ValueError("Belopp måste vara större än 0")
+    if rate < 0:
+        raise ValueError("Ränta får inte vara negativ")
+    if term_months <= 0:
+        raise ValueError("Löptid måste vara större än 0")
+    if residual_value < 0 or residual_value >= lease_amount:
+        raise ValueError("Residualvärde måste vara positivt och mindre än beloppet")
+
     # Calculate monthly interest rate
     monthly_rate = rate / 12
 

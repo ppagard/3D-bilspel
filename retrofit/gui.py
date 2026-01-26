@@ -23,22 +23,28 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
+from matplotlib.ticker import FuncFormatter
 
 
 def _parse_decimal(s: str) -> float:
     """
-    Tolkar tal som använder decimal komma (t.ex. 5,5 eller 1 234,56).
+    Tolkar tal som använder decimal komma (t.ex. 5,5 eller 1 234,56).
     Accepterar både komma och punkt som decimaltecken. Vid både punkt och
     komma tolkas punkt som tusentalsavgränsare (1.234,56 -> 1234,56).
+    Lancerar ValueError med ett tydligt felmeddelande om konverteringen misslyckas.
     """
-    s = s.strip().replace(" ", "")
-    if "," in s:
-        if "." in s:
-            s = s.replace(".", "")
-        s = s.replace(",", ".")
-    return float(s)
+    try:
+        s_clean = s.strip().replace(" ", "")
+        if "," in s_clean:
+            if "." in s_clean:
+                # Remove thousand separator
+                s_clean = s_clean.replace(".", "")
+            s_clean = s_clean.replace(",", ".")
+        return float(s_clean)
+    except Exception:
+        raise ValueError(f"Ogiltigt talformat: '{s}'")
 
 
 class LoanCalculatorGUI(QMainWindow):
@@ -147,8 +153,12 @@ class LoanCalculatorGUI(QMainWindow):
         self.summary_table.setHorizontalHeaderLabels(["Fält", "Värde"])
 
         # Make header non-editable and set column widths
-        self.summary_table.horizontalHeader().setStretchLastSection(True)
-        self.summary_table.verticalHeader().setVisible(False)
+        header = self.summary_table.horizontalHeader()
+        if header:
+            header.setStretchLastSection(True)
+        vh = self.summary_table.verticalHeader()
+        if vh:
+            vh.setVisible(False)
 
         # Set column widths
         self.summary_table.setColumnWidth(0, 150)
@@ -161,7 +171,7 @@ class LoanCalculatorGUI(QMainWindow):
 
         # Right side - Chart
         chart_group = QGroupBox("Amorteringsschema")
-        self.chart_canvas = FigureCanvas(plt.Figure(figsize=(8, 6)))
+        self.chart_canvas = FigureCanvas(Figure(figsize=(8, 6)))
 
         # Set up chart layout
         chart_layout = QVBoxLayout()
@@ -205,7 +215,16 @@ class LoanCalculatorGUI(QMainWindow):
         history_tab.setLayout(history_layout)
         self.history_table = QTableWidget(0, 8)
         self.history_table.setHorizontalHeaderLabels(
-            ["ID", "Typ", "Belopp", "Ränta %", "Löptid", "Månadsb.", "Residual", "Start"]
+            [
+                "ID",
+                "Typ",
+                "Belopp",
+                "Ränta %",
+                "Löptid",
+                "Månadsb.",
+                "Residual",
+                "Start",
+            ]
         )
         self.history_table.horizontalHeader().setStretchLastSection(True)
         self.history_table.verticalHeader().setVisible(False)
@@ -272,6 +291,8 @@ class LoanCalculatorGUI(QMainWindow):
         """
         Handle calculate button click
         """
+        # Temporarily disable the button to prevent double clicks
+        self.calculate_button.setEnabled(False)
         try:
             # Get input values
             loan_type = self.type_combo.currentText()
@@ -336,9 +357,11 @@ class LoanCalculatorGUI(QMainWindow):
             # Enable save and export buttons
             self.save_button.setEnabled(True)
             self.export_button.setEnabled(True)
-
         except Exception as e:
             self.show_error(f"Fel vid beräkning: {str(e)}")
+        finally:
+            # Re‑enable the button regardless of success
+            self.calculate_button.setEnabled(True)
 
     def update_summary_table(self, result):
         """
@@ -434,9 +457,7 @@ class LoanCalculatorGUI(QMainWindow):
 
         # Format y-axis to show SEK with commas
         self.ax.yaxis.set_major_formatter(
-            plt.FuncFormatter(
-                lambda x, p: f"{x:,.0f} {self.config['default_currency']}"
-            )
+            FuncFormatter(lambda x, p: f"{x:,.0f} {self.config['default_currency']}")
         )
 
         # Adjust layout
@@ -452,15 +473,11 @@ class LoanCalculatorGUI(QMainWindow):
         """
         schedule = result.get("schedule", [])
         rem_key = (
-            "remaining_principal"
-            if result["type"] == "loan"
-            else "remaining_balance"
+            "remaining_principal" if result["type"] == "loan" else "remaining_balance"
         )
         self.schedule_table.setRowCount(len(schedule))
         for i, row in enumerate(schedule):
-            self.schedule_table.setItem(
-                i, 0, QTableWidgetItem(str(row["month"]))
-            )
+            self.schedule_table.setItem(i, 0, QTableWidgetItem(str(row["month"])))
             self.schedule_table.setItem(
                 i, 1, QTableWidgetItem(self._fmt_belopp(row["payment"]))
             )
@@ -581,7 +598,11 @@ class LoanCalculatorGUI(QMainWindow):
                 self.history_table.setItem(
                     i,
                     6,
-                    QTableWidgetItem(f"{res:,.0f}" if res is not None and r["type"] == "lease" else "–"),
+                    QTableWidgetItem(
+                        f"{res:,.0f}"
+                        if res is not None and r["type"] == "lease"
+                        else "–"
+                    ),
                 )
                 self.history_table.setItem(i, 7, QTableWidgetItem(r["start_date"]))
         except Exception as e:
@@ -600,7 +621,9 @@ class LoanCalculatorGUI(QMainWindow):
             self.rate_input.setText(self._format_input_number(rec["rate"] * 100, 1))
             self.term_input.setText(str(rec["term"]))
             res = rec.get("residual_value")
-            self.residual_input.setText(self._format_input_number(res) if res is not None else "")
+            self.residual_input.setText(
+                self._format_input_number(res) if res is not None else ""
+            )
             from .calculator import calculate_loan, calculate_lease
 
             if rec["type"] == "loan":
