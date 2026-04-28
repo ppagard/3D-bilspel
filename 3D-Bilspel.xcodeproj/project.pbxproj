@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 90;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,7 +12,6 @@
 		AA000003 /* GameDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000103 /* GameDataManager.swift */; };
 		AA000004 /* GameDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000104 /* GameDelegate.swift */; };
 		AA000005 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000105 /* AppDelegate.swift */; };
-		AA000006 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA000106 /* Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,10 +28,8 @@
 /* Begin PBXFrameworksBuildPhase section */
 		AA000301 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
@@ -104,8 +101,6 @@
 			);
 			buildRules = (
 			);
-			dependencies = (
-			);
 			name = "3D-Bilspel";
 			productName = "3D-Bilspel";
 			productReference = AA000201 /* 3D-Bilspel.app */;
@@ -125,7 +120,6 @@
 				};
 			};
 			buildConfigurationList = AA000602 /* Build configuration list for PBXProject "3D-Bilspel" */;
-			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = sv;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -134,6 +128,7 @@
 				sv,
 			);
 			mainGroup = AA000400;
+			preferredProjectObjectVersion = 90;
 			productRefGroup = AA000402 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -146,18 +141,14 @@
 /* Begin PBXResourcesBuildPhase section */
 		AA000801 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
-				AA000006 /* Info.plist in Resources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		AA000701 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				AA000001 /* GameViewController.swift in Sources */,
 				AA000002 /* GameScene.swift in Sources */,
@@ -165,12 +156,11 @@
 				AA000004 /* GameDelegate.swift in Sources */,
 				AA000005 /* AppDelegate.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		AA000A01 /* Debug */ = {
+		AA000A01 /* Debug configuration for PBXProject "3D-Bilspel" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -186,7 +176,7 @@
 			};
 			name = Debug;
 		};
-		AA000A02 /* Release */ = {
+		AA000A02 /* Release configuration for PBXProject "3D-Bilspel" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -202,7 +192,7 @@
 			};
 			name = Release;
 		};
-		AA000A03 /* Debug */ = {
+		AA000A03 /* Debug configuration for PBXNativeTarget "3D-Bilspel" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -231,7 +221,7 @@
 			};
 			name = Debug;
 		};
-		AA000A04 /* Release */ = {
+		AA000A04 /* Release configuration for PBXNativeTarget "3D-Bilspel" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -266,19 +256,17 @@
 		AA000601 /* Build configuration list for PBXNativeTarget "3D-Bilspel" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				AA000A03 /* Debug */,
-				AA000A04 /* Release */,
+				AA000A03 /* Debug configuration for PBXNativeTarget "3D-Bilspel" */,
+				AA000A04 /* Release configuration for PBXNativeTarget "3D-Bilspel" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		AA000602 /* Build configuration list for PBXProject "3D-Bilspel" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				AA000A01 /* Debug */,
-				AA000A02 /* Release */,
+				AA000A01 /* Debug configuration for PBXProject "3D-Bilspel" */,
+				AA000A02 /* Release configuration for PBXProject "3D-Bilspel" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
