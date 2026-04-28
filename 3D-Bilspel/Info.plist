@@ -1,0 +1,23 @@
+{
+  "CFBundleIconName": "AppIcon",
+  "CFBundleIconFiles": [
+    "AppIcon"
+  ],
+  "UILaunchStoryboardName": "LaunchScreen",
+  "UIRequiredDeviceCapabilities": [
+    "arm64"
+  ],
+  "UIRequiresFullScreen": true,
+  "UIStatusBarHidden": true,
+  "UISupportedInterfaceOrientations": [
+    "UIInterfaceOrientationPortrait"
+  ],
+  "UISupportedInterfaceOrientations~ipad": [
+    "UIInterfaceOrientationPortrait"
+  ],
+  "MinimumOSVersion": "15.0",
+  "UIDeviceFamily": [
+    1,
+    2
+  ]
+}
