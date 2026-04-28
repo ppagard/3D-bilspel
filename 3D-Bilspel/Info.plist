@@ -1,8 +1,4 @@
 {
-  "CFBundleIconName": "AppIcon",
-  "CFBundleIconFiles": [
-    "AppIcon"
-  ],
   "UILaunchStoryboardName": "LaunchScreen",
   "UIRequiredDeviceCapabilities": [
     "arm64"

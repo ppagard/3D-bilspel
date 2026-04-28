@@ -70,7 +70,6 @@
 		AA000403 /* Assets.xcassets */ = {
 			isa = PBXGroup;
 			children = (
-				AA000405 /* AppIcon.appiconset */,
 				AA000406 /* AccentColor.colorset */,
 			);
 			path = Assets.xcassets;
@@ -82,11 +81,6 @@
 				AA000407 /* LaunchScreen.storyboard */,
 			);
 			path = Base.lproj;
-			sourceTree = "<group>";
-		};
-		AA000405 /* AppIcon.appiconset */ = {
-			isa = PBXGroup;
-			path = AppIcon.appiconset;
 			sourceTree = "<group>";
 		};
 		AA000406 /* AccentColor.colorset */ = {
@@ -222,7 +216,7 @@
 		AA000A03 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = ;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -250,7 +244,7 @@
 		AA000A04 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = ;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
